@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj": {}
+    "c:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj": {
+    "c:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj",
+        "projectUniqueName": "c:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj",
         "projectName": "Aplikacja",
-        "projectPath": "C:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj",
+        "projectPath": "c:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj",
         "packagesPath": "C:\\Users\\kajna\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\obj\\",
+        "outputPath": "c:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kajna\\AppData\\Roaming\\NuGet\\NuGet.Config"
