@@ -13,10 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RoslinaGlowna)
+                @Html.DisplayNameFor(model => model.RoslinaGlowna.NazwaPolska)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RoslinaTowarzyszaca)
+                @Html.DisplayNameFor(model => model.RoslinaTowarzyszaca.NazwaPolska)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TypZaleznosci)
@@ -31,10 +31,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.RoslinaGlowna.Id)
+                @Html.DisplayFor(modelItem => item.RoslinaGlowna.NazwaPolska)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RoslinaTowarzyszaca.Id)
+                @Html.DisplayFor(modelItem => item.RoslinaTowarzyszaca.NazwaPolska)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TypZaleznosci)

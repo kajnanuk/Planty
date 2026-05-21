@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Aplikacja.Data;
 using Aplikacja.Models;
 using Aplikacja.Filters;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Aplikacja.Controllers
 {
@@ -56,15 +58,35 @@ namespace Aplikacja.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NazwaUzytkownika,HasloHash,Rola,ApiToken")] Uzytkownik uzytkownik)
+        public async Task<IActionResult> Create([Bind("Id,NazwaUzytkownika,HasloHash,Rola")] Uzytkownik uzytkownik)
         {
             if (ModelState.IsValid)
             {
+                // 1. Zamiana wpisanego przez admina zwykłego hasła na hash
+                uzytkownik.HasloHash = ComputeSha256Hash(uzytkownik.HasloHash);
+
+                // 2. Automatyczne generowanie tokena API dla nowego użytkownika (np. jako unikalny GUID)
+                uzytkownik.ApiToken = Guid.NewGuid().ToString();
+
                 _context.Add(uzytkownik);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(uzytkownik);
+        }
+        // Metoda pomocnicza do tworzenia hashu (skrótu)
+        private static string ComputeSha256Hash(string rawData)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
 
         // GET: Uzytkownik/Edit/5
@@ -141,12 +163,28 @@ namespace Aplikacja.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var uzytkownik = await _context.Uzytkownicy.FindAsync(id);
-            if (uzytkownik != null)
+            if (_context.Uzytkownicy == null)
             {
-                _context.Uzytkownicy.Remove(uzytkownik);
+                return Problem("Entity set 'AplikacjaContext.Uzytkownicy' is null.");
             }
 
+            var uzytkownik = await _context.Uzytkownicy.FindAsync(id);
+            
+            if (uzytkownik != null)
+            {
+                // 1. Znajdź wszystkie rekordy w ogrodzie należące do tego użytkownika
+                var rekordyOgrodu = _context.OgrodyUzytkownikow.Where(o => o.UzytkownikId == id);
+                
+                // 2. Usuń je z bazy (zapobiega to błędowi FOREIGN KEY constraint)
+                if (rekordyOgrodu.Any())
+                {
+                    _context.OgrodyUzytkownikow.RemoveRange(rekordyOgrodu);
+                }
+
+                // 3. Teraz bezpiecznie usuń samego użytkownika
+                _context.Uzytkownicy.Remove(uzytkownik);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

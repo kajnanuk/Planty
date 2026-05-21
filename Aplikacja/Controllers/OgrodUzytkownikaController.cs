@@ -24,7 +24,21 @@ namespace Aplikacja.Controllers
         // GET: OgrodUzytkownika
         public async Task<IActionResult> Index()
         {
-            var aplikacjaContext = _context.OgrodyUzytkownikow.Include(o => o.Roslina).Include(o => o.Uzytkownik);
+            // 1. Odczytanie ID aktualnie zalogowanego użytkownika z sesji
+            var userIdString = HttpContext.Session.GetString("UserId");
+            
+            // Zabezpieczenie na wypadek, gdyby sesja wygasła
+            if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            // 2. Pobranie z bazy danych tylko tych rekordów, których UzytkownikId zgadza się z ID z sesji
+            var aplikacjaContext = _context.OgrodyUzytkownikow
+                .Include(o => o.Roslina)
+                .Include(o => o.Uzytkownik)
+                .Where(o => o.UzytkownikId == userId); // <-- To ta linijka robi całą magię!
+
             return View(await aplikacjaContext.ToListAsync());
         }
 
@@ -61,16 +75,22 @@ namespace Aplikacja.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UzytkownikId,RoslinaId,DataPosadzenia,IloscSztuk,WlasneNotatki")] OgrodUzytkownika ogrodUzytkownika)
+        public async Task<IActionResult> Create([Bind("Id,RoslinaId,DataPosadzenia,IloscSztuk,WlasneNotatki")] OgrodUzytkownika ogrodUzytkownika)
         {
             if (ModelState.IsValid)
             {
+                // Automatyczne przypisanie zalogowanego użytkownika
+                var userIdString = HttpContext.Session.GetString("UserId");
+                if (int.TryParse(userIdString, out int userId))
+                {
+                    ogrodUzytkownika.UzytkownikId = userId;
+                }
+
                 _context.Add(ogrodUzytkownika);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RoslinaId"] = new SelectList(_context.Rosliny, "Id", "Id", ogrodUzytkownika.RoslinaId);
-            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownicy, "Id", "Id", ogrodUzytkownika.UzytkownikId);
+            ViewData["RoslinaId"] = new SelectList(_context.Rosliny, "Id", "NazwaPolska", ogrodUzytkownika.RoslinaId);
             return View(ogrodUzytkownika);
         }
 
