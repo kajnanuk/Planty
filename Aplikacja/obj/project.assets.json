@@ -6466,11 +6466,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj",
+      "projectUniqueName": "C:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj",
       "projectName": "Aplikacja",
-      "projectPath": "c:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj",
+      "projectPath": "C:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\Aplikacja.csproj",
       "packagesPath": "C:\\Users\\kajna\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\obj\\",
+      "outputPath": "C:\\Users\\kajna\\VSCode\\C#\\pz2\\lab10-11-12\\Planty\\Aplikacja\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kajna\\AppData\\Roaming\\NuGet\\NuGet.Config"

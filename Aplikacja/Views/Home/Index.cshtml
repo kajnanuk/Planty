@@ -1,8 +1,171 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Aplikacja.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Panel główny";
+    // Pomocnicza tablica kolorów dla paska postępu
+    var koloryBootstrap = new[] { "bg-success", "bg-info", "bg-warning", "bg-primary", "bg-danger", "bg-secondary" };
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mb-5">
+    <h1 class="display-4">Witaj w Encyklopedii Roślin!</h1>
+    <p>Zarządzaj swoim ogrodem, poznawaj warstwy lasu i badaj zależności między roślinami.</p>
+</div>
+
+@if (Model.CzyZalogowany)
+{
+    <div class="card border-success mb-5 shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">🌿 Panel Twojego Ogrodu</h4>
+        </div>
+        <div class="card-body">
+
+            <h5 class="card-title">Audyt sąsiedztwa (Allelopatia w praktyce)</h5>
+            @if (Model.OstrzezeniaAllelopatyczne.Any())
+            {
+                foreach (var ostrzezenie in Model.OstrzezeniaAllelopatyczne)
+                {
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16">
+                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </svg>
+                        <div>
+                            @ostrzezenie
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-success" role="alert">
+                    Twój ogród jest harmonijny. Nie wykryto negatywnych interakcji (allelopatii) między roślinami!
+                </div>
+            }
+
+            <hr class="my-4" />
+
+            <h5 class="card-title">Zrównoważenie warstwowe ogrodu</h5>
+            <p class="text-muted small">Ekologiczny ogród (tzw. ogród leśny) opiera się na balansie różnych warstw roślinności.</p>
+            
+            @if (Model.ProcentowyRozkladWarstwMojegoOgrodu.Any())
+            {
+                <div class="progress mb-3" style="height: 30px;">
+                    @{ int i = 0; }
+                    @foreach (var warstwa in Model.ProcentowyRozkladWarstwMojegoOgrodu)
+                    {
+                        var kolor = koloryBootstrap[i % koloryBootstrap.Length];
+                        <div class="progress-bar @kolor" role="progressbar" style="width: @warstwa.Value.ToString().Replace(",", ".")%" aria-valuenow="@warstwa.Value" aria-valuemin="0" aria-valuemax="100" title="@warstwa.Key: @warstwa.Value%">
+                            @warstwa.Key (@warstwa.Value%)
+                        </div>
+                        i++;
+                    }
+                </div>
+            }
+            else
+            {
+                <p>Dodaj rośliny do "Mojego ogrodu", aby wygenerować profil warstwowy.</p>
+            }
+
+            <hr class="my-4" />
+
+            <h5 class="card-title">Harmonogram podlewania</h5>
+            @if (Model.HarmonogramPodlewania.Any())
+            {
+                <div class="row">
+                    @foreach (var grupa in Model.HarmonogramPodlewania)
+                    {
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 bg-light">
+                                <div class="card-header fw-bold text-primary">
+                                    💧 Zapotrzebowanie: @grupa.Key
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        @foreach (var roslina in grupa.Value)
+                                        {
+                                            <li>@roslina</li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>Uzupełnij rośliny w swoim ogrodzie, aby wygenerować wskazówki dotyczące podlewania.</p>
+            }
+        </div>
+    </div>
+}
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card text-dark bg-light border-success mb-3 shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title text-success">Wszystkie posadzone rośliny</h5>
+                <h2 class="display-5 fw-bold">@Model.CalkowitaLiczbaPosadzonych szt.</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-dark bg-light border-info mb-3 shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title text-info">Zarejestrowani ogrodnicy</h5>
+                <h2 class="display-5 fw-bold">@Model.LiczbaUzytkownikow</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">🏆 Top 5 najpopularniejszych roślin w systemie</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                @if (Model.TopRosliny.Any())
+                {
+                    int pozycja = 1;
+                    @foreach (var item in Model.TopRosliny)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><strong>#@pozycja</strong> @item.Key</span>
+                            <span class="badge bg-primary rounded-pill">@item.Value szt.</span>
+                        </li>
+                        pozycja++;
+                    }
+                }
+                else
+                {
+                    <li class="list-group-item text-muted">Brak danych.</li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">🌲 Baza roślin systemu według warstw</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                @if (Model.RozkladWarstw.Any())
+                {
+                    @foreach (var item in Model.RozkladWarstw)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @item.Key
+                            <span class="badge bg-secondary rounded-pill">@item.Value gatunków</span>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="list-group-item text-muted">Brak danych o warstwach.</li>
+                }
+            </ul>
+        </div>
+    </div>
 </div>

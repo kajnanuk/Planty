@@ -1,0 +1,15 @@
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\bin\Debug\net10.0\ApiKlient.exe
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\bin\Debug\net10.0\ApiKlient.deps.json
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\bin\Debug\net10.0\ApiKlient.runtimeconfig.json
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\bin\Debug\net10.0\ApiKlient.dll
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\bin\Debug\net10.0\ApiKlient.pdb
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\obj\Debug\net10.0\ApiKlient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\obj\Debug\net10.0\ApiKlient.AssemblyInfoInputs.cache
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\obj\Debug\net10.0\ApiKlient.AssemblyInfo.cs
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\obj\Debug\net10.0\ApiKlient.csproj.CoreCompileInputs.cache
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\obj\Debug\net10.0\ApiKlient.sourcelink.json
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\obj\Debug\net10.0\ApiKlient.dll
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\obj\Debug\net10.0\refint\ApiKlient.dll
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\obj\Debug\net10.0\ApiKlient.pdb
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\obj\Debug\net10.0\ApiKlient.genruntimeconfig.cache
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\ApiKlient\obj\Debug\net10.0\ref\ApiKlient.dll

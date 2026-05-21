@@ -1,0 +1,42 @@
+@model Aplikacja.Models.Zaleznosc
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Zaleznosc</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RoslinaGlowna)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RoslinaGlowna.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RoslinaTowarzyszaca)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RoslinaTowarzyszaca.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TypZaleznosci)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TypZaleznosci)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Opis)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Opis)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

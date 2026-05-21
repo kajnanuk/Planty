@@ -30,6 +30,10 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Auth/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -38,12 +42,132 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/OgrodUzytkownika/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2dyb2RVenl0a293bmlrYVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/OgrodUzytkownika/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2dyb2RVenl0a293bmlrYVxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/OgrodUzytkownika/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2dyb2RVenl0a293bmlrYVxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/OgrodUzytkownika/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2dyb2RVenl0a293bmlrYVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/OgrodUzytkownika/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2dyb2RVenl0a293bmlrYVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Roslina/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9zbGluYVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Roslina/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9zbGluYVxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Roslina/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9zbGluYVxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Roslina/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9zbGluYVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Roslina/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9zbGluYVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Uzytkownik/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXp5dGtvd25pa1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Uzytkownik/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXp5dGtvd25pa1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Uzytkownik/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXp5dGtvd25pa1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Uzytkownik/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXp5dGtvd25pa1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Uzytkownik/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXp5dGtvd25pa1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Warstwa/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2Fyc3R3YVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Warstwa/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2Fyc3R3YVxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Warstwa/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2Fyc3R3YVxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Warstwa/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2Fyc3R3YVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Warstwa/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2Fyc3R3YVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Wymaganie/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV3ltYWdhbmllXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Wymaganie/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV3ltYWdhbmllXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Wymaganie/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV3ltYWdhbmllXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Wymaganie/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV3ltYWdhbmllXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Wymaganie/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV3ltYWdhbmllXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Zaleznosc/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWmFsZXpub3NjXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Zaleznosc/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWmFsZXpub3NjXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Zaleznosc/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWmFsZXpub3NjXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Zaleznosc/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWmFsZXpub3NjXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/Zaleznosc/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWmFsZXpub3NjXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/kajna/VSCode/C\#/pz2/lab10-11-12/Planty/Aplikacja/Views/_ViewImports.cshtml]

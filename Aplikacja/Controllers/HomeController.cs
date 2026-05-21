@@ -1,24 +1,122 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Aplikacja.Models;
+using Aplikacja.Data;
 
-namespace Aplikacja.Controllers;
-
-public class HomeController : Controller
+namespace Aplikacja.Controllers
 {
-    public IActionResult Index()
+    public class HomeController : Controller
     {
-        return View();
-    }
+        private readonly ILogger<HomeController> _logger;
+        private readonly AplikacjaContext _context;
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        // Wstrzykujemy AplikacjaContext do kontrolera
+        public HomeController(ILogger<HomeController> logger, AplikacjaContext context)
+        {
+            _logger = logger;
+            _context = context;
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public async Task<IActionResult> Index()
+        {
+            var model = new DashboardViewModel();
+
+            // 1. Podstawowe, ogólne statystyki (jak wcześniej)
+            model.TopRosliny = await _context.OgrodyUzytkownikow
+                .Include(o => o.Roslina)
+                .Where(o => o.Roslina != null)
+                .GroupBy(o => o.Roslina.NazwaPolska)
+                .Select(g => new { Nazwa = g.Key, Suma = g.Sum(o => o.IloscSztuk) })
+                .OrderByDescending(x => x.Suma)
+                .Take(5)
+                .ToDictionaryAsync(x => x.Nazwa, x => x.Suma);
+
+            model.RozkladWarstw = await _context.Rosliny
+                .Include(r => r.Warstwa)
+                .Where(r => r.Warstwa != null)
+                .GroupBy(r => r.Warstwa.Nazwa)
+                .Select(g => new { Warstwa = g.Key, Ilosc = g.Count() })
+                .ToDictionaryAsync(x => x.Warstwa, x => x.Ilosc);
+
+            model.CalkowitaLiczbaPosadzonych = await _context.OgrodyUzytkownikow.SumAsync(o => (int?)o.IloscSztuk) ?? 0;
+            model.LiczbaUzytkownikow = await _context.Uzytkownicy.CountAsync();
+
+            // 2. Sprawdzenie, czy użytkownik jest zalogowany
+            var userIdString = HttpContext.Session.GetString("UserId");
+            if (!string.IsNullOrEmpty(userIdString) && int.TryParse(userIdString, out int userId))
+            {
+                model.CzyZalogowany = true;
+
+                // Pobranie roślin użytkownika wraz z wymaganymi relacjami
+                var mojeZasadzenia = await _context.OgrodyUzytkownikow
+                    .Include(o => o.Roslina).ThenInclude(r => r.Warstwa)
+                    .Include(o => o.Roslina).ThenInclude(r => r.Wymagania)
+                    .Where(o => o.UzytkownikId == userId)
+                    .ToListAsync();
+
+                var mojeRoslinyIds = mojeZasadzenia
+                    .Where(o => o.RoslinaId.HasValue)
+                    .Select(o => o.RoslinaId.Value)
+                    .Distinct()
+                    .ToList();
+
+                if (mojeRoslinyIds.Any())
+                {
+                    // A) AUDYT SĄSIEDZTWA (Allelopatia)
+                    var zaleznosciNegatywne = await _context.Zaleznosci
+                        .Include(z => z.RoslinaGlowna)
+                        .Include(z => z.RoslinaTowarzyszaca)
+                        .Where(z => z.TypZaleznosci == "Negatywna" && 
+                                    z.RoslinaGlownaId.HasValue && z.RoslinaTowarzyszacaId.HasValue &&
+                                    mojeRoslinyIds.Contains(z.RoslinaGlownaId.Value) && 
+                                    mojeRoslinyIds.Contains(z.RoslinaTowarzyszacaId.Value))
+                        .ToListAsync();
+
+                    foreach (var z in zaleznosciNegatywne)
+                    {
+                        model.OstrzezeniaAllelopatyczne.Add(
+                            $"Ostrzeżenie: W swoim ogrodzie posiadasz rośliny, które negatywnie na siebie wpływają ({z.RoslinaGlowna?.NazwaPolska} + {z.RoslinaTowarzyszaca?.NazwaPolska}). {z.Opis}");
+                    }
+
+                    // B) STATYSTYKI WARSTWOWOŚCI (Rozkład procentowy)
+                    int totalMojeRosliny = mojeZasadzenia.Sum(o => o.IloscSztuk);
+                    if (totalMojeRosliny > 0)
+                    {
+                        model.ProcentowyRozkladWarstwMojegoOgrodu = mojeZasadzenia
+                            .Where(o => o.Roslina != null && o.Roslina.Warstwa != null)
+                            .GroupBy(o => o.Roslina.Warstwa.Nazwa)
+                            .ToDictionary(
+                                g => g.Key, 
+                                g => Math.Round((double)g.Sum(o => o.IloscSztuk) / totalMojeRosliny * 100, 1)
+                            );
+                    }
+
+                    // C) KALENDARZ PIELĘGNACJI (Zapotrzebowanie na wodę)
+                    model.HarmonogramPodlewania = mojeZasadzenia
+                        .Where(o => o.Roslina != null && o.Roslina.Wymagania != null && !string.IsNullOrEmpty(o.Roslina.Wymagania.ZapotrzebowanieNaWode))
+                        .Select(o => o.Roslina)
+                        .Distinct() // Unikamy dublowania tych samych roślin, jeśli są posadzone kilka razy
+                        .GroupBy(r => r.Wymagania.ZapotrzebowanieNaWode)
+                        .ToDictionary(
+                            g => g.Key,
+                            g => g.Select(r => r.NazwaPolska).ToList()
+                        );
+                }
+            }
+
+            return View(model);
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

@@ -1,0 +1,42 @@
+@model Aplikacja.Models.Uzytkownik
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Uzytkownik</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NazwaUzytkownika)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NazwaUzytkownika)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HasloHash)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HasloHash)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Rola)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Rola)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ApiToken)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ApiToken)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
