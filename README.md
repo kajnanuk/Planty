@@ -20,7 +20,7 @@ Aplikacja korzysta z relacyjnej bazy danych SQLite, a komunikacja z nią odbywa 
 | Uzytkownik | Relacja 1:N z tabelą OgrodyUzytkownikow | Przechowuje dane kont (Nazwa, Rola w systemie, bezpieczny skrót HasloHash oraz unikalny ApiToken autoryzacyjny). |
 | OgrodUzytkownika | Tabela łącząca (Klucze obce do Uzytkownicy oraz Rosliny) | Zindywidualizowany rejestr nasadzeń konkretnego ogrodnika. Przechowuje ilość sztuk, datę posadzenia oraz notatki. |
 
-System transformacje stronę główną w inteligentny, dynamiczny panel analityczny. Po zalogowaniu system pobiera kontekst zalogowanego użytkownika i generuje trzy niezależne zestawienia:
+System transformuje stronę główną w inteligentny, dynamiczny panel analityczny. Po zalogowaniu system pobiera kontekst zalogowanego użytkownika i generuje trzy niezależne zestawienia:
 1. Audyt sąsiedztwa (Allelopatia w praktyce): Algorytm analizuje zestaw unikalnych identyfikatorów roślin posadzonych przez danego użytkownika i krzyżowo sprawdza je z tabelą Zaleznosci dla typu "Negatywna". W przypadku wykrycia konfliktu system generuje wyraźny alert ostrzegawczy z opisem zagrożenia.
 2. Statystyki warstwowości: Aplikacja agreguje sumaryczną ilość sztuk wszystkich nasadzeń użytkownika i oblicza procentowy udział poszczególnych pięter ekosystemu. Wynik prezentowany jest za pomocą skumulowanego paska postępu w technologii Bootstrap, dając
 wizualny pogląd na to, czy ogród jest poprawnie zbalansowany ekologicznie.
