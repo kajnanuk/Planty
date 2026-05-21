@@ -27,30 +27,21 @@ wizualny pogląd na to, czy ogród jest poprawnie zbalansowany ekologicznie.
 3. Wirtualny kalendarz pielęgnacji: Rośliny z ogrodu użytkownika są automatycznie grupowane według
 kryterium zapotrzebowania na wodę pobieranego bezpośrednio z tabeli Wymagania, tworząc przejrzysty, kafelkowy podział zadań dla ułatwienia organizacji nawadniania.
 
+### ApiKlient
+System integracyjny z interfejsem REST API
 
+Aplikacja ApiKlient to autonomiczny, interaktywny program tekstowy. Służy do celów demonstracyjnych oraz testowych dla wystawionych przez główną aplikację internetową endpointów REST API.
 
+Program pozwala na manualne symulowanie i testowanie pełnego cyklu życia zasobów (CRUD — Create, Read, Update, Delete) w bazie danych SQLite. Działa uniwersalnie — umożliwia wykonywanie żądań HTTP do wszystkich tabel dziedzinowych systemu.
 
+Aplikacja konsolowa komunikuje się z serwerem sieciowym bezstanowo za pomocą protokołu HTTPS przy użyciu natywnych klas .NET.
 
-Dokumentacja Aplikacji Konsolowej: ApiKlient
-System integracyjny z interfejsem REST API projektu „Encyklopedia Roślin”
-
-1. Przeznaczenie i opis programu
-Aplikacja ApiKlient to autonomiczny, interaktywny program tekstowy (CLI) napisany w języku C# (szablon .NET Console Application). Służy do celów demonstracyjnych oraz testowych (QA) dla wystawionych przez główną aplikację internetową endpointów REST API.
-
-Program pozwala na manualne symulowanie i testowanie pełnego cyklu życia zasobów (CRUD — Create, Read, Update, Delete) w bazie danych SQLite. Działa uniwersalnie — dzięki wbudowanej parametryzacji umożliwia wykonywanie żądań HTTP do wszystkich tabel dziedzinowych systemu.
-
-2. Architektura komunikacji i bezpieczeństwo
-Aplikacja konsolowa komunikuje się z serwerem sieciowym bezstanowo za pomocą protokołu HTTPS przy użyciu natywnych klas .NET (HttpWebRequest oraz HttpWebResponse).
-
-Każde wychodzące żądanie automatycznie dołącza nagłówki uwierzytelniające (Custom HTTP Headers):
-
-X-Username — nazwa użytkownika w systemie,
-
-X-Api-Token — unikalny klucz kryptograficzny przypisany do konta użytkownika.
+Każde wychodzące żądanie automatycznie dołącza nagłówki uwierzytelniające:
+- X-Username — nazwa użytkownika w systemie,
+- X-Api-Token — unikalny klucz kryptograficzny przypisany do konta użytkownika.
 
 Wszystkie dane przesyłane w operacjach zapisu (POST, PUT) oraz odczytu (GET) są w pełni serializowane do formatu JSON, przy zachowaniu izolacji struktur bazodanowych za pomocą wzorca DTO (Data Transfer Object).
 
-3. Instrukcja obsługi (Menu interaktywne)
 Po uruchomieniu program prezentuje panel sterowania z aktualną konfiguracją i zestawem opcji:
 
 ```Plaintext
@@ -67,38 +58,20 @@ Po uruchomieniu program prezentuje panel sterowania z aktualną konfiguracją i 
 ```
 Opis funkcji:
 Opcja [1] Zmiana tabeli (Endpointu): Pozwala na przełączanie się pomiędzy tabelami dziedzinowymi bazy danych. Aby zmienić kontekst operacji, wystarczy wpisać nazwę odpowiedniego kontrolera:
-
 WarstwaApi — zarządzanie piętrami roślinności,
-
 RoslinaApi — zarządzanie encyklopedią botaniczną,
-
 WymaganieApi — parametry siedliskowe i zapotrzebowanie na wodę,
-
 ZaleznoscApi — relacje allelopatyczne (sąsiedztwo roślin),
-
 OgrodUzytkownikaApi — wirtualny rejestr nasadzeń użytkowników.
 
-Opcja [2] Zmiana poświadczeń: Umożliwia symulację logowania na innego użytkownika lub celowe wprowadzenie błędnego tokenu w celu zademonstrowania wykładowcy, że serwer prawidłowo zwraca kod błędu 401 Unauthorized.
+Opcja [2] Zmiana poświadczeń: Umożliwia symulację logowania na innego użytkownika lub celowe wprowadzenie błędnego tokenu w celu zademonstrowania, że serwer prawidłowo zwraca kod błędu 401 Unauthorized.
 
 Opcja [3] GET (Wszystkie): Pobiera całą listę obiektów wybranej tabeli i wypisuje w oknie konsoli sformatowany ciąg JSON.
 
-Opcja [4] GET (Po ID): Odpytuje serwer o konkretny, pojedynczy zasób (np. /api/RoslinaApi/5). Jeśli obiekt nie istnieje, wyświetla komunikat 404 Not Found.
+Opcja [4] GET (Po ID): Odpytuje serwer o konkretny, pojedynczy zasób. Jeśli obiekt nie istnieje, wyświetla komunikat 404 Not Found.
 
 Opcja [5] POST (Dodawanie): Prosi o wprowadzenie danych obiektu jako czysty JSON. Serwer po utworzeniu rekordu zwraca kod 201 Created wraz z nadanym przez bazę, unikalnym identyfikatorem id.
 
 Opcja [6] PUT (Modyfikacja): Służy do aktualizacji rekordu. Wymaga podania ID modyfikowanego elementu oraz przesłania nowego ciała JSON. Sukces operacji sygnalizowany jest standardowym kodem sieciowym 204 No Content.
 
 Opcja [7] DELETE (Usuwanie): Wysyła żądanie usunięcia elementu o wybranym ID. Posiada wbudowaną obsługę błędów biznesowych serwera (np. gdy serwer zablokuje usunięcie warstwy, która zawiera przypisane rośliny, konsola czytelnie wypisze komunikat 400 Bad Request wraz ze szczegółami przekazanymi z bazy danych).
-
-4. Przykład przeprowadzenia testu poprawności (Scenariusz demo)
-Wybierz opcję 3 (GET), aby zweryfikować połączenie i zobaczyć początkowy stan tabeli WarstwaApi.
-
-Wybierz opcję 5 (POST) i dodaj nową warstwę wpisując:
-{"Nazwa":"Warstwa Mszysta","Opis":"Najniższa warstwa gleby"}
-
-Zwróć uwagę na wyświetlone w odpowiedzi id nowo utworzonego obiektu (np. id: 5).
-
-Wybierz opcję 6 (PUT), wpisz ID 5 i zmień opis wpisując:
-{"Id":5,"Nazwa":"Warstwa Mszysta","Opis":"Zaktualizowany opis mchów"}
-
-Wybierz opcję 7 (DELETE) i podaj ID 5, aby usunąć rekord testowy i przywrócić bazę do stanu wyjściowego.
