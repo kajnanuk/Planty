@@ -25,6 +25,10 @@ System transformuje stronę główną w inteligentny, dynamiczny panel analitycz
 2. Statystyki warstwowości: Aplikacja agreguje sumaryczną liczbę nasadzeń użytkownika i oblicza procentowy udział poszczególnych pięter ekosystemu. Wynik prezentowany jest za pomocą skumulowanego paska postępu, dając wizualny pogląd na to, czy ogród jest poprawnie zbalansowany ekologicznie.
 3. Wirtualny kalendarz pielęgnacji: Rośliny z ogrodu użytkownika są automatycznie grupowane według kryterium zapotrzebowania na wodę pobieranego bezpośrednio z tabeli Wymagania, tworząc przejrzysty, kafelkowy podział zadań dla ułatwienia organizacji nawadniania.
 
+### ApiKlient
+System integracyjny z interfejsem REST API
+
+Aplikacja ApiKlient to autonomiczny, interaktywny program tekstowy. Służy do celów demonstracyjnych oraz testowych dla wystawionych przez główną aplikację internetową endpointów REST API.
 
 
 ## Graficzny interfejs
@@ -46,6 +50,8 @@ System transformuje stronę główną w inteligentny, dynamiczny panel analitycz
 ![Strona logowania](./3.png)
 
 
+Aplikacja konsolowa komunikuje się z serwerem sieciowym bezstanowo za pomocą protokołu HTTPS przy użyciu natywnych klas .NET.
+
 
 ## Dokumentacja Aplikacji Konsolowej: ApiKlient
 
@@ -64,6 +70,7 @@ Każde wychodzące żądanie automatycznie dołącza nagłówki uwierzytelniają
 X-Username — nazwa użytkownika w systemie,
 
 X-Api-Token — unikalny klucz przypisany do konta użytkownika.
+
 
 Wszystkie dane przesyłane w operacjach zapisu (POST, PUT) oraz odczytu (GET) są w pełni serializowane do formatu JSON, przy zachowaniu izolacji struktur bazodanowych za pomocą wzorca DTO.
 
@@ -86,22 +93,17 @@ Po uruchomieniu program prezentuje panel sterowania z aktualną konfiguracją i 
 #### Opis funkcji:
 
 Opcja [1] Zmiana tabeli (Endpointu): Pozwala na przełączanie się pomiędzy tabelami dziedzinowymi bazy danych. Aby zmienić kontekst operacji, wystarczy wpisać nazwę odpowiedniego kontrolera:
-
 WarstwaApi — zarządzanie piętrami roślinności,
-
 RoslinaApi — zarządzanie encyklopedią botaniczną,
-
 WymaganieApi — parametry siedliskowe i zapotrzebowanie na wodę,
-
 ZaleznoscApi — relacje allelopatyczne (sąsiedztwo roślin),
-
 OgrodUzytkownikaApi — wirtualny rejestr nasadzeń użytkowników.
 
-Opcja [2] Zmiana poświadczeń: Umożliwia symulację logowania na innego użytkownika lub celowe wprowadzenie błędnego tokenu w celu zademonstrowania wykładowcy, że serwer prawidłowo zwraca kod błędu 401 Unauthorized.
+Opcja [2] Zmiana poświadczeń: Umożliwia symulację logowania na innego użytkownika lub celowe wprowadzenie błędnego tokenu w celu zademonstrowania, że serwer prawidłowo zwraca kod błędu 401 Unauthorized.
 
 Opcja [3] GET (Wszystkie): Pobiera całą listę obiektów wybranej tabeli i wypisuje w oknie konsoli sformatowany ciąg JSON.
 
-Opcja [4] GET (Po ID): Odpytuje serwer o konkretny, pojedynczy zasób (np. /api/RoslinaApi/5). Jeśli obiekt nie istnieje, wyświetla komunikat 404 Not Found.
+Opcja [4] GET (Po ID): Odpytuje serwer o konkretny, pojedynczy zasób. Jeśli obiekt nie istnieje, wyświetla komunikat 404 Not Found.
 
 Opcja [5] POST (Dodawanie): Prosi o wprowadzenie danych obiektu jako czysty JSON. Serwer po utworzeniu rekordu zwraca kod 201 Created wraz z nadanym przez bazę, unikalnym identyfikatorem id.
 
