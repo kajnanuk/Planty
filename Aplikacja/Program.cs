@@ -9,19 +9,19 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AplikacjaContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("AplikacjaContext") ?? throw new InvalidOperationException("Connection string 'AplikacjaContext' not found.")));
 
-// Dodanie obsługi sesji
+// dodanie obslugi sesji
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.HttpOnly = true; // plik cookie niedostępny przez skrypty po stronie klienta
-    options.Cookie.IsEssential = true; // śledzenie sesji podczas nawigacji
+    options.Cookie.HttpOnly = true; // plik cookie niedostepny dla js
+    options.Cookie.IsEssential = true; // sledzenie sesji
 });
 
 
 var app = builder.Build();
 
-// Pobranie dostępu do serwisów aplikacji i uruchomienie seedowania danych
+// pobranie dostepu do serwisow i inicjalizacja bazy danych
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -48,7 +48,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-// Uruchomienie sesji w aplikacji
+// uruchomienie sesji
 app.UseSession();
 
 app.UseAuthorization();

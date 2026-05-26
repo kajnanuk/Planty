@@ -16,7 +16,7 @@ namespace Aplikacja.Models
         public Roslina? RoslinaTowarzyszaca { get; set; }
 
         [Display(Name = "Typ zależności")]
-        public string TypZaleznosci { get; set; } // Np. Pozytywna, Negatywna
+        public string TypZaleznosci { get; set; } //np Pozytywna, Negatywna, Neutralna
 
         [Display(Name = "Opis wpływu")]
         public string Opis { get; set; }

@@ -2,22 +2,22 @@ namespace Aplikacja.Models
 {
     public class DashboardViewModel
     {
-        // --- Statystyki ogólne (dla wszystkich) ---
+        // statystyki zbiorcze (dla wszystkich)
         public Dictionary<string, int> TopRosliny { get; set; } = new Dictionary<string, int>();
         public Dictionary<string, int> RozkladWarstw { get; set; } = new Dictionary<string, int>();
         public int CalkowitaLiczbaPosadzonych { get; set; }
         public int LiczbaUzytkownikow { get; set; }
 
-        // --- Statystyki spersonalizowane (tylko dla zalogowanych) ---
+        //statystyki spersonalizowanie
         public bool CzyZalogowany { get; set; }
         
-        // Audyt sąsiedztwa: Lista komunikatów z ostrzeżeniami
+        // komunikaty z ostrzezeniami
         public List<string> OstrzezeniaAllelopatyczne { get; set; } = new List<string>();
         
-        // Statystyki warstwowości MOJEGO ogrodu: Nazwa warstwy -> Procentowy udział
+        // statystyi warstwowosci
         public Dictionary<string, double> ProcentowyRozkladWarstwMojegoOgrodu { get; set; } = new Dictionary<string, double>();
         
-        // Kalendarz pielęgnacji: Zapotrzebowanie na wodę -> Lista nazw roślin
+        // zapotrzebowanie na wode
         public Dictionary<string, List<string>> HarmonogramPodlewania { get; set; } = new Dictionary<string, List<string>>();
     }
 }

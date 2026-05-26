@@ -3,11 +3,11 @@
 @{
     ViewData["Title"] = "Panel główny";
     // Pomocnicza tablica kolorów dla paska postępu
-    var koloryBootstrap = new[] { "bg-success", "bg-info", "bg-warning", "bg-primary", "bg-danger", "bg-secondary" };
+    var koloryBootstrap = new[] { "bg-success", "bg-info", "bg-warning", "bg-primary", "bg-danger", "bg-secondary", "bg-dark" };
 }
 
 <div class="text-center mb-5">
-    <h1 class="display-4">Witaj w Encyklopedii Roślin!</h1>
+    <h1 class="display-4">Witaj w Planty!</h1>
     <p>Zarządzaj swoim ogrodem, poznawaj warstwy lasu i badaj zależności między roślinami.</p>
 </div>
 
@@ -15,36 +15,40 @@
 {
     <div class="card border-success mb-5 shadow-sm">
         <div class="card-header bg-success text-white">
-            <h4 class="mb-0">🌿 Panel Twojego Ogrodu</h4>
+            <h4 class="mb-0">Panel Twojego Ogrodu</h4>
         </div>
         <div class="card-body">
 
-            <h5 class="card-title">Audyt sąsiedztwa (Allelopatia w praktyce)</h5>
+            <h5 class="card-title">Ostrzeżenia o negatywnych zależnościach</h5>
             @if (Model.OstrzezeniaAllelopatyczne.Any())
             {
-                foreach (var ostrzezenie in Model.OstrzezeniaAllelopatyczne)
-                {
-                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <div class="alert alert-danger" role="alert">
+                    <div class="d-flex align-items-center mb-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16">
                             <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                         </svg>
-                        <div>
-                            @ostrzezenie
-                        </div>
+                        <strong>Ostrzeżenie: Wykryto negatywne interakcje w Twoim ogrodzie!</strong>
                     </div>
-                }
+                    <p class="mb-2">Zaleca się rozsadzenie poniższych grup roślin:</p>
+                    <ul class="mb-0">
+                        @foreach (var ostrzezenie in Model.OstrzezeniaAllelopatyczne)
+                        {
+                            <li>@ostrzezenie</li>
+                        }
+                    </ul>
+                </div>
             }
             else
             {
                 <div class="alert alert-success" role="alert">
-                    Twój ogród jest harmonijny. Nie wykryto negatywnych interakcji (allelopatii) między roślinami!
+                    Twój ogród jest harmonijny. Nie wykryto negatywnych zależności między roślinami!
                 </div>
             }
 
             <hr class="my-4" />
 
             <h5 class="card-title">Zrównoważenie warstwowe ogrodu</h5>
-            <p class="text-muted small">Ekologiczny ogród (tzw. ogród leśny) opiera się na balansie różnych warstw roślinności.</p>
+            <p class="text-muted small">Ekologiczny ogród opiera się na balansie różnych warstw roślinności.</p>
             
             @if (Model.ProcentowyRozkladWarstwMojegoOgrodu.Any())
             {
@@ -62,7 +66,7 @@
             }
             else
             {
-                <p>Dodaj rośliny do "Mojego ogrodu", aby wygenerować profil warstwowy.</p>
+                <p>Dodaj rośliny do swojego ogrodu, aby zobaczyć profil warstwowy.</p>
             }
 
             <hr class="my-4" />
@@ -76,7 +80,7 @@
                         <div class="col-md-4 mb-3">
                             <div class="card h-100 bg-light">
                                 <div class="card-header fw-bold text-primary">
-                                    💧 Zapotrzebowanie: @grupa.Key
+                                    Zapotrzebowanie wodne: @grupa.Key
                                 </div>
                                 <div class="card-body">
                                     <ul class="mb-0">
@@ -103,8 +107,8 @@
     <div class="col-md-6">
         <div class="card text-dark bg-light border-success mb-3 shadow-sm">
             <div class="card-body text-center">
-                <h5 class="card-title text-success">Wszystkie posadzone rośliny</h5>
-                <h2 class="display-5 fw-bold">@Model.CalkowitaLiczbaPosadzonych szt.</h2>
+                <h5 class="card-title text-success">Liczba posadzonych roślin</h5>
+                <h2 class="display-5 fw-bold">@Model.CalkowitaLiczbaPosadzonych</h2>
             </div>
         </div>
     </div>
@@ -122,7 +126,7 @@
     <div class="col-md-6 mb-4">
         <div class="card shadow-sm h-100">
             <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">🏆 Top 5 najpopularniejszych roślin w systemie</h5>
+                <h5 class="mb-0">5 najpopularniejszych roślin w systemie</h5>
             </div>
             <ul class="list-group list-group-flush">
                 @if (Model.TopRosliny.Any())
@@ -148,7 +152,7 @@
     <div class="col-md-6 mb-4">
         <div class="card shadow-sm h-100">
             <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">🌲 Baza roślin systemu według warstw</h5>
+                <h5 class="mb-0">Liczba gatunków w każdej warstwie</h5>
             </div>
             <ul class="list-group list-group-flush">
                 @if (Model.RozkladWarstw.Any())

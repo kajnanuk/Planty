@@ -7,12 +7,12 @@ namespace Aplikacja.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            // Odczyt z obiektu sesji
+            // odczyt z obiektu sesji
             var userId = context.HttpContext.Session.GetString("UserId");
             
             if (string.IsNullOrEmpty(userId))
             {
-                // Jeśli brak w sesji, przekieruj na stronę logowania
+                // jesli brak w sesji to przekieruj na strone logowania
                 context.Result = new RedirectToActionResult("Login", "Auth", null);
             }
             

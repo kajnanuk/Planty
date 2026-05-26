@@ -13,7 +13,7 @@ namespace Aplikacja.Models
         [Display(Name = "Opis")]
         public string Opis { get; set; }
 
-        // Relacja 1:N (Jedna warstwa, wiele roślin)
+        // jedna warstwa ma wiele roslin
         public ICollection<Roslina>? Rosliny { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace Aplikacja.Models
         [Key]
         public int Id { get; set; }
 
-        // Klucz obcy 1:1 do Rośliny
+        // klucz obcy do rosliny
         public int? RoslinaId { get; set; }
         public Roslina? Roslina { get; set; }
 

@@ -8,7 +8,7 @@ namespace Aplikacja.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiAuth] // <-- Nasz nowy filtr zabezpieczający dostęp!
+    [ApiAuth]
     public class WarstwaApiController : ControllerBase
     {
         private readonly AplikacjaContext _context;
@@ -90,7 +90,7 @@ namespace Aplikacja.Controllers
                 return NotFound();
             }
 
-            // Zapobieganie usunięciu warstwy, jeśli ma przypisane rośliny
+            // nie pozwalamy usunac warstwe jesli ma prypisane rosliny
             var maRosliny = await _context.Rosliny.AnyAsync(r => r.WarstwaId == id);
             if (maRosliny)
             {

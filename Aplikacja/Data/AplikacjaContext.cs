@@ -9,15 +9,13 @@ namespace Aplikacja.Data
 {
     public class AplikacjaContext : DbContext
     {
-        // Konstruktor pobiera opcje kontekstu bazy danych, dzięki którym 
-        // możliwa będzie wygodna komunikacja i utrwalanie obiektów
+        // konstruktor pobiera opcje konfiguracji
         public AplikacjaContext (DbContextOptions<AplikacjaContext> options)
             : base(options)
         {
         }
 
-        // Definicje obiektów klasy DbSet, przy pomocy których będziemy 
-        // mieli dostęp do poszczególnych tabel w bazie
+        //obiekty klasy DbSet reprezentujace tabele w bazie danych
         public DbSet<Uzytkownik> Uzytkownicy { get; set; } = default!;
         public DbSet<Warstwa> Warstwy { get; set; } = default!;
         public DbSet<Roslina> Rosliny { get; set; } = default!;
@@ -25,12 +23,11 @@ namespace Aplikacja.Data
         public DbSet<Zaleznosc> Zaleznosci { get; set; } = default!;
         public DbSet<OgrodUzytkownika> OgrodyUzytkownikow { get; set; } = default!;
 
-        // Konfiguracja specyficznych zachowań modeli podczas tworzenia bazy
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Zabezpieczenie przed pętlą kaskadowego usuwania dla self-referencing w tabeli Zaleznosci
+            // zabezpiecznie przed kaskadowym usuwaniem zaleznosci (self reference)
             modelBuilder.Entity<Zaleznosc>()
                 .HasOne(z => z.RoslinaGlowna)
                 .WithMany(r => r.ZaleznosciJakoGlowna)

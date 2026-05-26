@@ -11,7 +11,7 @@ namespace Aplikacja.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly AplikacjaContext _context;
 
-        // Wstrzykujemy AplikacjaContext do kontrolera
+        // wstrzykujemy AplikacjaContext do kontrolera
         public HomeController(ILogger<HomeController> logger, AplikacjaContext context)
         {
             _logger = logger;
@@ -22,7 +22,7 @@ namespace Aplikacja.Controllers
         {
             var model = new DashboardViewModel();
 
-            // 1. Podstawowe, ogólne statystyki (jak wcześniej)
+            // podstawowe ogólne statystyki
             model.TopRosliny = await _context.OgrodyUzytkownikow
                 .Include(o => o.Roslina)
                 .Where(o => o.Roslina != null)
@@ -42,13 +42,13 @@ namespace Aplikacja.Controllers
             model.CalkowitaLiczbaPosadzonych = await _context.OgrodyUzytkownikow.SumAsync(o => (int?)o.IloscSztuk) ?? 0;
             model.LiczbaUzytkownikow = await _context.Uzytkownicy.CountAsync();
 
-            // 2. Sprawdzenie, czy użytkownik jest zalogowany
+            // sprawdzenie czy uzytkownik jest zalogowany
             var userIdString = HttpContext.Session.GetString("UserId");
             if (!string.IsNullOrEmpty(userIdString) && int.TryParse(userIdString, out int userId))
             {
                 model.CzyZalogowany = true;
 
-                // Pobranie roślin użytkownika wraz z wymaganymi relacjami
+                // pobranie roslin wraz z warstwami i wymaganiami
                 var mojeZasadzenia = await _context.OgrodyUzytkownikow
                     .Include(o => o.Roslina).ThenInclude(r => r.Warstwa)
                     .Include(o => o.Roslina).ThenInclude(r => r.Wymagania)
@@ -63,7 +63,7 @@ namespace Aplikacja.Controllers
 
                 if (mojeRoslinyIds.Any())
                 {
-                    // A) AUDYT SĄSIEDZTWA (Allelopatia)
+                    // zaleznosci negatywne
                     var zaleznosciNegatywne = await _context.Zaleznosci
                         .Include(z => z.RoslinaGlowna)
                         .Include(z => z.RoslinaTowarzyszaca)
@@ -76,10 +76,10 @@ namespace Aplikacja.Controllers
                     foreach (var z in zaleznosciNegatywne)
                     {
                         model.OstrzezeniaAllelopatyczne.Add(
-                            $"Ostrzeżenie: W swoim ogrodzie posiadasz rośliny, które negatywnie na siebie wpływają ({z.RoslinaGlowna?.NazwaPolska} + {z.RoslinaTowarzyszaca?.NazwaPolska}). {z.Opis}");
+                            $"{z.RoslinaGlowna?.NazwaPolska} + {z.RoslinaTowarzyszaca?.NazwaPolska}: {z.Opis}");
                     }
 
-                    // B) STATYSTYKI WARSTWOWOŚCI (Rozkład procentowy)
+                    // statystyki warstwowe
                     int totalMojeRosliny = mojeZasadzenia.Sum(o => o.IloscSztuk);
                     if (totalMojeRosliny > 0)
                     {
@@ -92,11 +92,11 @@ namespace Aplikacja.Controllers
                             );
                     }
 
-                    // C) KALENDARZ PIELĘGNACJI (Zapotrzebowanie na wodę)
+                    // zapotrzebowanie wodne
                     model.HarmonogramPodlewania = mojeZasadzenia
                         .Where(o => o.Roslina != null && o.Roslina.Wymagania != null && !string.IsNullOrEmpty(o.Roslina.Wymagania.ZapotrzebowanieNaWode))
                         .Select(o => o.Roslina)
-                        .Distinct() // Unikamy dublowania tych samych roślin, jeśli są posadzone kilka razy
+                        .Distinct() // unikamy duplikatow
                         .GroupBy(r => r.Wymagania.ZapotrzebowanieNaWode)
                         .ToDictionary(
                             g => g.Key,

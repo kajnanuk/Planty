@@ -16,11 +16,11 @@ namespace Aplikacja.Models
         [Display(Name = "Opis ogólny")]
         public string Opis { get; set; }
 
-        // Klucz obcy i właściwość nawigacyjna do tabeli Warstwy
+        // klucz obcy i wlasciwosc nawigacyjna
         public int? WarstwaId { get; set; }
         public Warstwa? Warstwa { get; set; }
 
-        // Relacje (jedna roślina ma jedne wymagania, wiele zależności i może być w wielu ogrodach)
+        // relacje rosliny do reszty
         public Wymaganie? Wymagania { get; set; }
         public ICollection<Zaleznosc>? ZaleznosciJakoGlowna { get; set; }
         public ICollection<Zaleznosc>? ZaleznosciJakoTowarzyszaca { get; set; }

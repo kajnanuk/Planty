@@ -11,7 +11,7 @@ namespace Aplikacja.Filters
             
             if (rola != "Admin")
             {
-                // Jeśli nie jest adminem, odrzucamy na stronę logowania (lub główną)
+                // jesli nie jestes adminem to przekieruj na strone logowania
                 context.Result = new RedirectToActionResult("Login", "Auth", null);
             }
             

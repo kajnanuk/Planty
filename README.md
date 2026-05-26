@@ -5,9 +5,9 @@ Paweł Czyżewski - czeski@student.agh.edu.pl
 
 Aleksandra Dousa - adousa@student.agh.edu.pl
 ## Opis
-Projekt realizuje zaawansowany system wsparcia projektowania oraz zarządzania ogrodami permakulturowymi i ogrodami leśnymi (tzw. food forests). Głównym celem aplikacji jest dostarczenie użytkownikom narzędzia do optymalizacji nasadzeń pod kątem dwóch fundamentalnych kryteriów ekologicznych: warstwowości roślinności (piętrowego układu lasu) oraz zależności allelopatycznych (wzajemnego biochemicznego wpływu roślin na siebie).
+Projekt realizuje system wsparcia projektowania oraz zarządzania ogrodami permakulturowymi i ogrodami leśnymi. Głównym celem aplikacji jest dostarczenie użytkownikom narzędzia do optymalizacji nasadzeń pod kątem dwóch fundamentalnych kryteriów ekologicznych: warstwowości roślinności (piętrowego układu lasu) oraz zależności allelopatycznych (wzajemnego biochemicznego wpływu roślin na siebie).
 
-System nie tylko działa jako klasyczna, encyklopedyczna baza danych, ale przede wszystkim implementuje dedykowaną logikę analizującą stan wirtualnego ogrodu każdego zalogowanego użytkownika. Aplikacja ułatwia planowanie zrównoważonych upraw poprzez automatyczne generowanie alertów o konfliktach sąsiedztwa i dostarczanie spersonalizowanych harmonogramów pielęgnacyjnych.
+System nie tylko działa jako klasyczna, encyklopedyczna baza danych, ale przede wszystkim implementuje dedykowaną logikę analizującą stan wirtualnego ogrodu każdego zalogowanego użytkownika. Aplikacja ułatwia planowanie zrównoważonych upraw poprzez automatyczne generowanie alertów o konfliktach sąsiedztwa i dostarczanie spersonalizowanych harmonogramów podlewania.
 
 Aplikacja korzysta z relacyjnej bazy danych SQLite, a komunikacja z nią odbywa się w całości za pośrednictwem warstwy mapowania obiektowo-relacyjnego Entity Framework Core. System operuje na 6 powiązanych tabelach.
 
@@ -21,36 +21,54 @@ Aplikacja korzysta z relacyjnej bazy danych SQLite, a komunikacja z nią odbywa 
 | OgrodUzytkownika | Tabela łącząca (Klucze obce do Uzytkownicy oraz Rosliny) | Zindywidualizowany rejestr nasadzeń konkretnego ogrodnika. Przechowuje ilość sztuk, datę posadzenia oraz notatki. |
 
 System transformuje stronę główną w inteligentny, dynamiczny panel analityczny. Po zalogowaniu system pobiera kontekst zalogowanego użytkownika i generuje trzy niezależne zestawienia:
-1. Audyt sąsiedztwa (Allelopatia w praktyce): Algorytm analizuje zestaw unikalnych identyfikatorów roślin posadzonych przez danego użytkownika i krzyżowo sprawdza je z tabelą Zaleznosci dla typu "Negatywna". W przypadku wykrycia konfliktu system generuje wyraźny alert ostrzegawczy z opisem zagrożenia.
-2. Statystyki warstwowości: Aplikacja agreguje sumaryczną ilość sztuk wszystkich nasadzeń użytkownika i oblicza procentowy udział poszczególnych pięter ekosystemu. Wynik prezentowany jest za pomocą skumulowanego paska postępu w technologii Bootstrap, dając
-wizualny pogląd na to, czy ogród jest poprawnie zbalansowany ekologicznie.
-3. Wirtualny kalendarz pielęgnacji: Rośliny z ogrodu użytkownika są automatycznie grupowane według
-kryterium zapotrzebowania na wodę pobieranego bezpośrednio z tabeli Wymagania, tworząc przejrzysty, kafelkowy podział zadań dla ułatwienia organizacji nawadniania.
+1. Ostrzeżenia o negatywnych zależnościach: Algorytm analizuje zestaw unikalnych identyfikatorów roślin posadzonych przez danego użytkownika i krzyżowo sprawdza je z tabelą Zaleznosci dla typu "Negatywna". W przypadku wykrycia konfliktu system generuje wyraźny alert ostrzegawczy z opisem zagrożenia.
+2. Statystyki warstwowości: Aplikacja agreguje sumaryczną liczbę nasadzeń użytkownika i oblicza procentowy udział poszczególnych pięter ekosystemu. Wynik prezentowany jest za pomocą skumulowanego paska postępu, dając wizualny pogląd na to, czy ogród jest poprawnie zbalansowany ekologicznie.
+3. Wirtualny kalendarz pielęgnacji: Rośliny z ogrodu użytkownika są automatycznie grupowane według kryterium zapotrzebowania na wodę pobieranego bezpośrednio z tabeli Wymagania, tworząc przejrzysty, kafelkowy podział zadań dla ułatwienia organizacji nawadniania.
 
 
 
+## Graficzny interfejs
+
+### Strona główna ze statystykami (po zalogowaniu)
+
+![Strona Główna](./1.png)
+
+### Strony z tabelami (na przykładzie encyklopedii roślin)
+
+![Strona z roślinami](./2.png)
+
+### Strona dodawania rekordu (na przykładzie encyklopedii roślin)
+
+![Strona z dodawaniem](./4.png)
+
+### Strona logowania
+
+![Strona logowania](./3.png)
 
 
-Dokumentacja Aplikacji Konsolowej: ApiKlient
-System integracyjny z interfejsem REST API projektu „Encyklopedia Roślin”
 
-1. Przeznaczenie i opis programu
-Aplikacja ApiKlient to autonomiczny, interaktywny program tekstowy (CLI) napisany w języku C# (szablon .NET Console Application). Służy do celów demonstracyjnych oraz testowych (QA) dla wystawionych przez główną aplikację internetową endpointów REST API.
+## Dokumentacja Aplikacji Konsolowej: ApiKlient
+
+### Przeznaczenie i opis programu
+
+Aplikacja ApiKlient to autonomiczny, interaktywny program tekstowy (CLI) napisany w języku C# (szablon .NET Console Application). Służy do celów demonstracyjnych oraz testowych dla wystawionych przez główną aplikację internetową endpointów REST API.
 
 Program pozwala na manualne symulowanie i testowanie pełnego cyklu życia zasobów (CRUD — Create, Read, Update, Delete) w bazie danych SQLite. Działa uniwersalnie — dzięki wbudowanej parametryzacji umożliwia wykonywanie żądań HTTP do wszystkich tabel dziedzinowych systemu.
 
-2. Architektura komunikacji i bezpieczeństwo
-Aplikacja konsolowa komunikuje się z serwerem sieciowym bezstanowo za pomocą protokołu HTTPS przy użyciu natywnych klas .NET (HttpWebRequest oraz HttpWebResponse).
+### Architektura komunikacji i bezpieczeństwo
+
+Aplikacja konsolowa komunikuje się z serwerem sieciowym przy użyciu natywnych klas .NET (HttpWebRequest oraz HttpWebResponse).
 
 Każde wychodzące żądanie automatycznie dołącza nagłówki uwierzytelniające (Custom HTTP Headers):
 
 X-Username — nazwa użytkownika w systemie,
 
-X-Api-Token — unikalny klucz kryptograficzny przypisany do konta użytkownika.
+X-Api-Token — unikalny klucz przypisany do konta użytkownika.
 
-Wszystkie dane przesyłane w operacjach zapisu (POST, PUT) oraz odczytu (GET) są w pełni serializowane do formatu JSON, przy zachowaniu izolacji struktur bazodanowych za pomocą wzorca DTO (Data Transfer Object).
+Wszystkie dane przesyłane w operacjach zapisu (POST, PUT) oraz odczytu (GET) są w pełni serializowane do formatu JSON, przy zachowaniu izolacji struktur bazodanowych za pomocą wzorca DTO.
 
-3. Instrukcja obsługi (Menu interaktywne)
+### Instrukcja obsługi (Menu interaktywne)
+
 Po uruchomieniu program prezentuje panel sterowania z aktualną konfiguracją i zestawem opcji:
 
 ```Plaintext
@@ -65,7 +83,8 @@ Po uruchomieniu program prezentuje panel sterowania z aktualną konfiguracją i 
 7. [DELETE] Usuń rekord
 0. Zakończ program
 ```
-Opis funkcji:
+#### Opis funkcji:
+
 Opcja [1] Zmiana tabeli (Endpointu): Pozwala na przełączanie się pomiędzy tabelami dziedzinowymi bazy danych. Aby zmienić kontekst operacji, wystarczy wpisać nazwę odpowiedniego kontrolera:
 
 WarstwaApi — zarządzanie piętrami roślinności,
@@ -89,16 +108,3 @@ Opcja [5] POST (Dodawanie): Prosi o wprowadzenie danych obiektu jako czysty JSON
 Opcja [6] PUT (Modyfikacja): Służy do aktualizacji rekordu. Wymaga podania ID modyfikowanego elementu oraz przesłania nowego ciała JSON. Sukces operacji sygnalizowany jest standardowym kodem sieciowym 204 No Content.
 
 Opcja [7] DELETE (Usuwanie): Wysyła żądanie usunięcia elementu o wybranym ID. Posiada wbudowaną obsługę błędów biznesowych serwera (np. gdy serwer zablokuje usunięcie warstwy, która zawiera przypisane rośliny, konsola czytelnie wypisze komunikat 400 Bad Request wraz ze szczegółami przekazanymi z bazy danych).
-
-4. Przykład przeprowadzenia testu poprawności (Scenariusz demo)
-Wybierz opcję 3 (GET), aby zweryfikować połączenie i zobaczyć początkowy stan tabeli WarstwaApi.
-
-Wybierz opcję 5 (POST) i dodaj nową warstwę wpisując:
-{"Nazwa":"Warstwa Mszysta","Opis":"Najniższa warstwa gleby"}
-
-Zwróć uwagę na wyświetlone w odpowiedzi id nowo utworzonego obiektu (np. id: 5).
-
-Wybierz opcję 6 (PUT), wpisz ID 5 i zmień opis wpisując:
-{"Id":5,"Nazwa":"Warstwa Mszysta","Opis":"Zaktualizowany opis mchów"}
-
-Wybierz opcję 7 (DELETE) i podaj ID 5, aby usunąć rekord testowy i przywrócić bazę do stanu wyjściowego.

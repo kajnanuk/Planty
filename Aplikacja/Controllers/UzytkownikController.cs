@@ -62,10 +62,10 @@ namespace Aplikacja.Controllers
         {
             if (ModelState.IsValid)
             {
-                // 1. Zamiana wpisanego przez admina zwykłego hasła na hash
+                // zahashowanie hasla
                 uzytkownik.HasloHash = ComputeSha256Hash(uzytkownik.HasloHash);
 
-                // 2. Automatyczne generowanie tokena API dla nowego użytkownika (np. jako unikalny GUID)
+                // generowanie tokenu API
                 uzytkownik.ApiToken = Guid.NewGuid().ToString();
 
                 _context.Add(uzytkownik);
@@ -74,7 +74,7 @@ namespace Aplikacja.Controllers
             }
             return View(uzytkownik);
         }
-        // Metoda pomocnicza do tworzenia hashu (skrótu)
+        // Metoda pomocnicza do tworzenia hashu
         private static string ComputeSha256Hash(string rawData)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -172,16 +172,16 @@ namespace Aplikacja.Controllers
             
             if (uzytkownik != null)
             {
-                // 1. Znajdź wszystkie rekordy w ogrodzie należące do tego użytkownika
+                // znajdujemy wszystkie rekordy nalezace do danego uzytkownika
                 var rekordyOgrodu = _context.OgrodyUzytkownikow.Where(o => o.UzytkownikId == id);
                 
-                // 2. Usuń je z bazy (zapobiega to błędowi FOREIGN KEY constraint)
+                // usuwamy je z bazy
                 if (rekordyOgrodu.Any())
                 {
                     _context.OgrodyUzytkownikow.RemoveRange(rekordyOgrodu);
                 }
 
-                // 3. Teraz bezpiecznie usuń samego użytkownika
+                // teraz usuwamy samego uzytkownika
                 _context.Uzytkownicy.Remove(uzytkownik);
             }
             

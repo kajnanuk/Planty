@@ -1,101 +1,152 @@
-﻿using System.Net;
-using System.Text.Json;
+﻿using System;
+using System.IO;
+using System.Net;
 
-// UWAGA: Upewnij się, że port (np. 5000 / 5001 / 7158) zgadza się z adresem Twojej uruchomionej aplikacji MVC!
-string baseUrl = "http://localhost:5116/api/WarstwaApi";
-string username = "admin";
-string apiToken = "pierwszy-token-api-123";
-
-Console.WriteLine("--- TESTOWANIE PEŁNEGO CYKLU CRUD W REST API ---");
-
-try
+namespace ApiKlient
 {
-    // 1. POBRANIE DANYCH (GET)
-    Console.WriteLine("\n[GET] Pobieranie warstw:");
-    var getReq = (HttpWebRequest)WebRequest.Create(baseUrl);
-    getReq.Method = "GET";
-    getReq.Headers.Add("X-Username", username);
-    getReq.Headers.Add("X-Api-Token", apiToken);
-
-    using (var response = (HttpWebResponse)getReq.GetResponse())
-    using (var streamReader = new StreamReader(response.GetResponseStream()))
+    class Program
     {
-        Console.WriteLine(streamReader.ReadToEnd());
-    }
+        static string baseUrl = "http://localhost:5116/api"; 
+        static string endpoint = "WarstwaApi";
+        static string username = "admin";
+        static string apiToken = "pierwszy-token-api-123";
 
-    // 2. DODANIE DANYCH (POST)
-    Console.WriteLine("\n[POST] Dodawanie nowej warstwy:");
-    var postReq = (HttpWebRequest)WebRequest.Create(baseUrl);
-    postReq.Method = "POST";
-    postReq.ContentType = "application/json";
-    postReq.Headers.Add("X-Username", username);
-    postReq.Headers.Add("X-Api-Token", apiToken);
-
-    using (var streamWriter = new StreamWriter(postReq.GetRequestStream()))
-    {
-        string json = JsonSerializer.Serialize(new { Nazwa = "Warstwa Testowa", Opis = "Zostanie zaraz zmieniona" });
-        streamWriter.Write(json);
-    }
-
-    int newId = 0;
-    using (var response = (HttpWebResponse)postReq.GetResponse())
-    using (var streamReader = new StreamReader(response.GetResponseStream()))
-    {
-        string responseText = streamReader.ReadToEnd();
-        Console.WriteLine("Odpowiedź serwera: " + responseText);
-        
-        // Wyciągamy ID nowo utworzonej warstwy z formatu JSON
-        using (JsonDocument doc = JsonDocument.Parse(responseText))
+        static void Main(string[] args)
         {
-            newId = doc.RootElement.GetProperty("id").GetInt32();
+            bool dziala = true;
+            while (dziala)
+            {
+                Console.Clear();
+                Console.WriteLine("--- APLIKACJA KONSOLOWA REST API ---");
+                Console.WriteLine($"[1] Adres docelowy: {baseUrl}/{endpoint}");
+                Console.WriteLine($"[2] Zalogowany jako: {username} (Token: {apiToken})");
+                Console.WriteLine("------------------------------------");
+                Console.WriteLine("[3] GET - Pobierz wszystkie rekordy");
+                Console.WriteLine("[4] GET - Pobierz rekord po ID");
+                Console.WriteLine("[5] POST - Dodaj nowy rekord");
+                Console.WriteLine("[6] PUT - Modyfikuj rekord");
+                Console.WriteLine("[7] DELETE - Usuń rekord");
+                Console.WriteLine("[0] Zakończ program");
+                Console.Write("\nWybierz opcję: ");
+
+                string wybor = Console.ReadLine();
+
+                try
+                {
+                    switch (wybor)
+                    {
+                        case "1":
+                            Console.Write("Podaj nową nazwę endpointu (np. WarstwaApi, RoslinaApi): ");
+                            string nowyEndpoint = Console.ReadLine();
+                            if (!string.IsNullOrWhiteSpace(nowyEndpoint)) endpoint = nowyEndpoint;
+                            break;
+                        case "2":
+                            Console.Write("Podaj nazwę użytkownika: ");
+                            username = Console.ReadLine();
+                            Console.Write("Podaj token API: ");
+                            apiToken = Console.ReadLine();
+                            break;
+                        case "3":
+                            WykonajZadanie("GET", "");
+                            break;
+                        case "4":
+                            Console.Write("Podaj ID rekordu: ");
+                            string idGet = Console.ReadLine();
+                            WykonajZadanie("GET", $"/{idGet}");
+                            break;
+                        case "5":
+                            Console.WriteLine("Podaj dane w formacie JSON.");
+                            Console.WriteLine("Przykład dla Warstwy: {\"Nazwa\":\"Nowa Warstwa\",\"Opis\":\"Przykładowy opis\"}");
+                            Console.Write("JSON: ");
+                            string jsonPost = Console.ReadLine();
+                            WykonajZadanie("POST", "", jsonPost);
+                            break;
+                        case "6":
+                            Console.Write("Podaj ID rekordu do edycji: ");
+                            string idPut = Console.ReadLine();
+                            Console.WriteLine("Podaj nowe dane w formacie JSON (Pamiętaj, żeby zawrzeć \"id\": " + idPut + " wewnątrz JSON-a!).");
+                            Console.Write("JSON: ");
+                            string jsonPut = Console.ReadLine();
+                            WykonajZadanie("PUT", $"/{idPut}", jsonPut);
+                            break;
+                        case "7":
+                            Console.Write("Podaj ID rekordu do usunięcia: ");
+                            string idDel = Console.ReadLine();
+                            WykonajZadanie("DELETE", $"/{idDel}");
+                            break;
+                        case "0":
+                            dziala = false;
+                            break;
+                        default:
+                            Console.WriteLine("Nieznana opcja.");
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"\n[BŁĄD]: {ex.Message}");
+                }
+
+                if (dziala)
+                {
+                    Console.WriteLine("\nNaciśnij ENTER, aby kontynuować...");
+                    Console.ReadLine();
+                }
+            }
+        }
+
+        // metoda do obslugi zadan http
+        static void WykonajZadanie(string metoda, string parametryUrl, string cialoJson = null)
+        {
+            string pelnyUrl = $"{baseUrl}/{endpoint}{parametryUrl}";
+            Console.WriteLine($"\n>>> Wysyłam żądanie {metoda} na adres: {pelnyUrl}");
+
+            var request = (HttpWebRequest)WebRequest.Create(pelnyUrl);
+            request.Method = metoda;
+            request.Headers.Add("X-Username", username);
+            request.Headers.Add("X-Api-Token", apiToken);
+
+            // jesli POST albo PUT to dodajemy json
+            if (!string.IsNullOrEmpty(cialoJson) && (metoda == "POST" || metoda == "PUT"))
+            {
+                request.ContentType = "application/json";
+                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                {
+                    streamWriter.Write(cialoJson);
+                }
+            }
+
+            try
+            {
+                // oczekujemy na odpowiedz i czytamy ja
+                using (var response = (HttpWebResponse)request.GetResponse())
+                {
+                    Console.WriteLine($"\n[STATUS ODPOWIEDZI]: {(int)response.StatusCode} {response.StatusCode}");
+                    
+                    // nie ma czego czytac
+                    if (response.StatusCode != HttpStatusCode.NoContent)
+                    {
+                        using (var streamReader = new StreamReader(response.GetResponseStream()))
+                        {
+                            Console.WriteLine("[CIAŁO ODPOWIEDZI]:");
+                            Console.WriteLine(streamReader.ReadToEnd());
+                        }
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                Console.WriteLine($"\n[BŁĄD SIECI / API]: {ex.Message}");
+                if (ex.Response != null)
+                {
+                    using (var response = (HttpWebResponse)ex.Response)
+                    using (var streamReader = new StreamReader(response.GetResponseStream()))
+                    {
+                        Console.WriteLine($"[STATUS BŁĘDU]: {(int)response.StatusCode} {response.StatusCode}");
+                        Console.WriteLine("[SZCZEGÓŁY]: " + streamReader.ReadToEnd());
+                    }
+                }
+            }
         }
     }
-
-    Console.WriteLine($"\n[INFO] Udało się utworzyć warstwę o przypisanym ID: {newId}");
-
-    // 3. AKTUALIZACJA DANYCH (PUT)
-    Console.WriteLine($"\n[PUT] Aktualizacja warstwy o ID: {newId}:");
-    var putReq = (HttpWebRequest)WebRequest.Create($"{baseUrl}/{newId}");
-    putReq.Method = "PUT";
-    putReq.ContentType = "application/json";
-    putReq.Headers.Add("X-Username", username);
-    putReq.Headers.Add("X-Api-Token", apiToken);
-
-    using (var streamWriter = new StreamWriter(putReq.GetRequestStream()))
-    {
-        // Pamiętaj, aby wysłać ID zgodne z tym w URLu (zabezpieczenie przed over-postingiem)
-        string json = JsonSerializer.Serialize(new { Id = newId, Nazwa = "Warstwa Zaktualizowana", Opis = "Ten opis został zmieniony przez PUT" });
-        streamWriter.Write(json);
-    }
-
-    using (var response = (HttpWebResponse)putReq.GetResponse())
-    {
-        Console.WriteLine($"Status odpowiedzi (NoContent = 204 to sukces!): {(int)response.StatusCode} {response.StatusCode}");
-    }
-
-    // 4. USUNIĘCIE DANYCH (DELETE)
-    Console.WriteLine($"\n[DELETE] Usuwanie warstwy o ID: {newId}:");
-    var deleteReq = (HttpWebRequest)WebRequest.Create($"{baseUrl}/{newId}");
-    deleteReq.Method = "DELETE";
-    deleteReq.Headers.Add("X-Username", username);
-    deleteReq.Headers.Add("X-Api-Token", apiToken);
-
-    using (var response = (HttpWebResponse)deleteReq.GetResponse())
-    {
-        Console.WriteLine($"Status odpowiedzi (NoContent = 204 to sukces!): {(int)response.StatusCode} {response.StatusCode}");
-    }
 }
-catch (WebException ex)
-{
-    Console.WriteLine($"\nWystąpił błąd sieci: {ex.Message}");
-    if (ex.Response != null)
-    {
-        using (var reader = new StreamReader(ex.Response.GetResponseStream()))
-        {
-            Console.WriteLine("Szczegóły błędu: " + reader.ReadToEnd());
-        }
-    }
-}
-
-Console.WriteLine("\nNaciśnij Enter, aby zakończyć...");
-Console.ReadLine();

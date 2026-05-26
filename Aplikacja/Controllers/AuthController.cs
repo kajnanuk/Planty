@@ -14,14 +14,14 @@ namespace Aplikacja.Controllers
             _context = context;
         }
 
-        // Zwraca widok formularza logowania
+        // zwraca widok formularza logowania
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-        // Przetwarza dane z formularza
+        // przetwarza dane z formularza
         [HttpPost]
         public IActionResult Login(string nazwaUzytkownika, string haslo)
         {
@@ -31,16 +31,16 @@ namespace Aplikacja.Controllers
                 return View();
             }
 
-            // Obliczenie hashu z wpisanego hasła
+            // obliczenie hashu z wpisanego hasla
             string hasloHash = ComputeSha256Hash(haslo);
 
-            // Szukanie użytkownika w bazie
+            // szukanie uzytkownika w bazie
             var uzytkownik = _context.Uzytkownicy
                 .FirstOrDefault(u => u.NazwaUzytkownika == nazwaUzytkownika && u.HasloHash == hasloHash);
 
             if (uzytkownik != null)
             {
-                // Zapisanie danych do sesji
+                // zapisanie danych do sesji
                 HttpContext.Session.SetString("UserId", uzytkownik.Id.ToString());
                 HttpContext.Session.SetString("UserName", uzytkownik.NazwaUzytkownika);
                 HttpContext.Session.SetString("UserRole", uzytkownik.Rola);
@@ -54,12 +54,12 @@ namespace Aplikacja.Controllers
 
         public IActionResult Logout()
         {
-            // Czyszczenie sesji po wylogowaniu
+            // czyszczenie sesji po wylogowaniu
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
-        // Metoda pomocnicza do tworzenia hashu
+        // metoda pomocnicza do tworzenia hashu
         private static string ComputeSha256Hash(string rawData)
         {
             using (SHA256 sha256Hash = SHA256.Create())

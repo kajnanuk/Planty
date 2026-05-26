@@ -24,20 +24,20 @@ namespace Aplikacja.Controllers
         // GET: OgrodUzytkownika
         public async Task<IActionResult> Index()
         {
-            // 1. Odczytanie ID aktualnie zalogowanego użytkownika z sesji
+            // odczytanie id zalogowanego uzytkownika
             var userIdString = HttpContext.Session.GetString("UserId");
             
-            // Zabezpieczenie na wypadek, gdyby sesja wygasła
+            // gdyby sesja wygasla
             if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
             {
                 return RedirectToAction("Login", "Auth");
             }
 
-            // 2. Pobranie z bazy danych tylko tych rekordów, których UzytkownikId zgadza się z ID z sesji
+            // pobranie odpowidenich rekordow
             var aplikacjaContext = _context.OgrodyUzytkownikow
                 .Include(o => o.Roslina)
                 .Include(o => o.Uzytkownik)
-                .Where(o => o.UzytkownikId == userId); // <-- To ta linijka robi całą magię!
+                .Where(o => o.UzytkownikId == userId);
 
             return View(await aplikacjaContext.ToListAsync());
         }

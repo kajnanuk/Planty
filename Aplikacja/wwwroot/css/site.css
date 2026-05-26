@@ -1,3 +1,29 @@
+/* 1. Importujemy czcionkę Poppins z Google Fonts (różne grubości: 300, 400, 600) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Nabla&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Linden+Hill:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+/* 2. Nadpisujemy globalne zmienne Bootstrapa */
+:root {
+    --bs-body-font-family: 'Elms Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* 3. Upewniamy się, że cały dokument (body) z niej korzysta */
+body {
+    font-family: var(--bs-body-font-family);
+    background-color: #9ad789; /*#f8f9fa; /* Opcjonalnie: lekko szare tło, żeby aplikacja wyglądała nowocześniej */
+}
+
+/* 4. Opcjonalnie: Ustawienie grubszej czcionki dla wszystkich nagłówków */
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-weight: 600;
+}
+
+#navbar {
+  background-color: #77b067;
+}
+
 html {
   font-size: 14px;
 }

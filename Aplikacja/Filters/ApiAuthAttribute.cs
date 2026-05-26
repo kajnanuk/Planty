@@ -8,11 +8,11 @@ namespace Aplikacja.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            // Pobranie kontekstu bazy danych z serwisów (Dependency Injection)
+            // pobranie kontekstu bazy danych
             var dbContext = context.HttpContext.RequestServices.GetRequiredService<AplikacjaContext>();
             var request = context.HttpContext.Request;
 
-            // Sprawdzenie obecności nagłówków
+            // sprawdzenie czy sa naglowki
             if (!request.Headers.TryGetValue("X-Username", out var username) ||
                 !request.Headers.TryGetValue("X-Api-Token", out var token))
             {
@@ -20,7 +20,7 @@ namespace Aplikacja.Filters
                 return;
             }
 
-            // Weryfikacja w bazie danych
+            //weryfikacja w bazie danych
             var user = dbContext.Uzytkownicy.FirstOrDefault(u => 
                 u.NazwaUzytkownika == username.ToString() && 
                 u.ApiToken == token.ToString());

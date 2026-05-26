@@ -22,7 +22,6 @@ C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\rjsm
 C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\scopedcss\bundle\Aplikacja.styles.css
 C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\scopedcss\projectbundle\Aplikacja.bundle.scp.css
-C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\compressed\w15cz1ouau-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\compressed\8x9owe5k3z-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\compressed\juytzwqa7v-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\compressed\3pp0bhpaol-{0}-c2jlpeoesf-c2jlpeoesf.gz
@@ -365,3 +364,4 @@ C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\comp
 C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\compressed\0ggq6hppwh-{0}-jjsuc0puko-jjsuc0puko.gz
 C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\compressed\g43ol2giyy-{0}-9vr69e8ynj-9vr69e8ynj.gz
 C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\Aplikacja.csproj.Up2Date
+C:\Users\kajna\VSCode\C#\pz2\lab10-11-12\Planty\Aplikacja\obj\Debug\net10.0\compressed\w15cz1ouau-{0}-vgpmtmbqnj-vgpmtmbqnj.gz

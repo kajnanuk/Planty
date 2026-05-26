@@ -18,7 +18,7 @@ namespace Aplikacja.Models
 
         public string? ApiToken { get; set; }
 
-        // Relacja: Użytkownik ma wiele roślin w swoim ogrodzie
+        // uzytkownik ma wiele roslin w swoim ogrodzie
         public ICollection<OgrodUzytkownika>? OgrodUzytkownika { get; set; }
     }
 }

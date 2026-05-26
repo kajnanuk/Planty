@@ -10,29 +10,28 @@ namespace Aplikacja.Data
     {
         public static void Initialize(AplikacjaContext context)
         {
-            // Upewnia się, że baza danych została utworzona
+            // upewnia sie ze baza danych jest utworzona
             context.Database.EnsureCreated();
 
-            // Szukamy jakichkolwiek użytkowników. Jeśli jacyś są, to znaczy, 
-            // że baza została już zainicjowana i przerywamy działanie metody.
+            // jesli sa jacys uzytkownicy to nie trzeba nic robic
             if (context.Uzytkownicy.Any())
             {
                 return;   
             }
 
-            // 1. Dodawanie pierwszego administratora
+            // dodawanie pierwszego administratora
             var admin = new Uzytkownik 
             { 
                 NazwaUzytkownika = "admin", 
-                HasloHash = ComputeSha256Hash("admin123"), // Hasło to "admin123"
+                HasloHash = ComputeSha256Hash("admin"), // haslo dla admina
                 Rola = "Admin",
-                ApiToken = "pierwszy-token-api-123" // Wymóg do obsługi REST API
+                ApiToken = "pierwszy-token-api-123" // do obslugi REST API
             };
             
             context.Uzytkownicy.Add(admin);
             context.SaveChanges();
 
-            // 2. Dodawanie podstawowych warstw
+            // dodawanie podstawowych warstw
             var warstwy = new Warstwa[]
             {
                 new Warstwa { Nazwa = "Drzewa wysokie", Opis = "Najwyższa warstwa w ogrodzie/lesie." },
@@ -45,7 +44,7 @@ namespace Aplikacja.Data
             context.Warstwy.AddRange(warstwy);
             context.SaveChanges();
 
-            // 3. Dodawanie przykładowej rośliny do testów
+            // dodawanie przykladowej rosliny
             var pomidor = new Roslina
             {
                 NazwaPolska = "Pomidor zwyczajny",
@@ -58,7 +57,7 @@ namespace Aplikacja.Data
             context.SaveChanges();
         }
 
-        // Metoda pomocnicza do tworzenia hashu (skrótu) z hasła
+        // metoda pomocnicza do tworzenia hashu
         private static string ComputeSha256Hash(string rawData)
         {
             using (SHA256 sha256Hash = SHA256.Create())
